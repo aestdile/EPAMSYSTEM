@@ -1106,6 +1106,29 @@ namespace EPAMSYSTEM.Services
         }
 
 
+        /*----------------Get All Employees----------------*/
+
+        public void GetAllEmployees()
+        {
+            List<Employee> employees = new List<Employee>();
+            if (System.IO.File.Exists(FilePath))
+            {
+                string json = System.IO.File.ReadAllText(FilePath);
+                employees = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Employee>>(json) ?? new List<Employee>();
+            }
+            if (employees.Count == 0)
+            {
+                Console.WriteLine("No employees found.");
+            }
+            else
+            {
+                foreach (var employee in employees)
+                {
+                    Console.WriteLine($"Id: {employee.Id}, Name: {employee.FirstName} {employee.LastName}, Email: {employee.Email}");
+                }
+            }
+        }
+
 
 
     }
