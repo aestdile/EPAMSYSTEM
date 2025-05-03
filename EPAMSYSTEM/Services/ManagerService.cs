@@ -281,6 +281,89 @@ namespace EPAMSYSTEM.Services
         }
 
 
+        /*-------------------------Login----------------------------*/
+
+        public string Login()
+        {
+            Console.Clear();
+            Console.WriteLine("------------------Manager Login---------------------\n");
+
+            Console.Write("Your Id: ");
+            string idInput = Console.ReadLine();
+
+            Guid id;
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(idInput))
+                {
+                    Console.Write("Id cannot be empty. Try again: ");
+                }
+                else if (!Guid.TryParse(idInput, out id))
+                {
+                    Console.Write("Id must be a valid GUID. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                idInput = Console.ReadLine();
+            }
+
+            /*--------------Password----------------*/
+
+            Console.Write("Password: ");
+            string password = Console.ReadLine();
+
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(password))
+                {
+                    Console.Write("Password can not be empty!");
+                }
+                else if (password.Length < 8)
+                {
+                    Console.Write("Password can not be less 8 characters!");
+                }
+                else if (!password.Any(char.IsUpper))
+                {
+                    Console.Write("Password must contain at least one uppercase letter!");
+                }
+                else if (!password.Any(char.IsLower))
+                {
+                    Console.Write("Password must contain at least one lowercase letter!");
+                }
+                else if (!password.Any(char.IsDigit))
+                {
+                    Console.Write("Password must contain at leat one digit!");
+                }
+                else if (!password.Any(ch => "!@#$%^&*()-_=+[{]};:'\",<.>/?".Contains(ch)))
+                {
+                    Console.Write("Password must contain at least one special character!");
+                }
+                else
+                {
+                    break;
+                }
+                password = Console.ReadLine();
+            }
+
+            List<Manager> managers = new List<Manager>();
+            if (System.IO.File.Exists(FilePath))
+            {
+                string json = System.IO.File.ReadAllText(FilePath);
+                managers = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Manager>>(json) ?? new List<Manager>();
+            }
+
+            Manager manager = managers.FirstOrDefault(m => m.Id == id && m.Password == password);
+            if (manager != null)
+            {
+                return "Invalid Id or Password!";
+            }
+            Console.WriteLine($"Welcome {manager.FirstName} {manager.LastName}!");
+
+            return "Login is successfull!";
+        }
+
 
     }
 }
