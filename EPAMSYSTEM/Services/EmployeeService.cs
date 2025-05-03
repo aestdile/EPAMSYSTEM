@@ -588,5 +588,79 @@ namespace EPAMSYSTEM.Services
         }
 
 
+        /*----------------Attendance----------------*/
+
+        public string AttendanceOfEmployee()
+        {
+            Console.Clear();
+            Console.WriteLine("------------Attendance Employee---------------\n");
+            Console.Write("Your Id: ");
+            string idInput = Console.ReadLine();
+
+            Guid id;
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(idInput))
+                {
+                    Console.Write("Id cannot be empty. Try again: ");
+                }
+                else if (!Guid.TryParse(idInput, out id))
+                {
+                    Console.Write("Id must be a valid GUID. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                idInput = Console.ReadLine();
+            }
+
+            Console.Write("Attendance in this month: ");
+            string attendance = Console.ReadLine();
+
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(attendance))
+                {
+                    Console.Write("Attendance cannot be empty. Try again: ");
+                }
+                else if (!int.TryParse(attendance, out int attendanceValue))
+                {
+                    Console.Write("Attendance must be a valid number. Try again: ");
+                }
+                else if (attendanceValue < 0)
+                {
+                    Console.Write("Attendance cannot be negative. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                attendance = Console.ReadLine();
+            }
+
+            List<Employee> employees = new List<Employee>();
+            if (System.IO.File.Exists(FilePath))
+            {
+                string json = System.IO.File.ReadAllText(FilePath);
+                employees = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Employee>>(json) ?? new List<Employee>();
+            }
+
+            Employee employee = employees.FirstOrDefault(e => e.Id == id);
+            if (employee == null)
+            {
+                return "Employee not found";
+            }
+            employee.Attendance = int.Parse(attendance);
+            string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(employees, Newtonsoft.Json.Formatting.Indented);
+            System.IO.File.WriteAllText(FilePath, jsonString);
+
+
+            return "Attendance updated successfully";
+        }
+
+
+
+
     }
 }
