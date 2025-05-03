@@ -752,6 +752,143 @@ namespace EPAMSYSTEM.Services
         }
 
 
+        /*-------------------------Update Admin----------------------------*/
+
+        public string UpdateAdmin()
+        {
+            Console.Clear();
+            Console.WriteLine("------------------Update Admin---------------------\n");
+
+            Console.Write("Enter Admin Id: ");
+            string idInput = Console.ReadLine();
+
+            Guid id;
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(idInput))
+                {
+                    Console.Write("Id cannot be empty. Try again: ");
+                }
+                else if (!Guid.TryParse(idInput, out id))
+                {
+                    Console.Write("Id must be a valid GUID. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                idInput = Console.ReadLine();
+            }
+
+            List<Admin> admins = new List<Admin>();
+            if (System.IO.File.Exists("admin.json"))
+            {
+                string json = System.IO.File.ReadAllText("admin.json");
+                admins = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Admin>>(json) ?? new List<Admin>();
+            }
+
+            Admin admin = admins.FirstOrDefault(a => a.Id == id);
+            if (admin == null)
+            {
+                return "Admin not found!";
+            }
+
+            Console.Write("Enter Role: ");
+            string role = Console.ReadLine();
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(role))
+                {
+                    Console.Write("Role cannot be empty. Try again: ");
+                }
+                else if (role.Length < 2)
+                {
+                    Console.Write("Role must be at least 2 characters long. Try again: ");
+                }
+                else if (role.Length > 40)
+                {
+                    Console.Write("Role must be less than 40 characters long. Try again: ");
+                }
+                else if (!char.IsUpper(role[0]))
+                {
+                    Console.Write("Role must start with an uppercase letter. Try again: ");
+                }
+                else if (!role.All(c => char.IsLetter(c)))
+                {
+                    Console.Write("Role must contain only letters. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                role = Console.ReadLine();
+            }
+
+            Console.Write("Enter New Department: ");
+            string department = Console.ReadLine();
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(department))
+                {
+                    Console.Write("Department cannot be empty. Try again: ");
+                }
+                else if (department.Length < 3)
+                {
+                    Console.Write("Department must be at least 3 characters long. Try again: ");
+                }
+                else if (department.Length > 40)
+                {
+                    Console.Write("Department must be less than 40 characters long. Try again: ");
+                }
+                else if (!char.IsUpper(department[0]))
+                {
+                    Console.Write("Department must start with an uppercase letter. Try again: ");
+                }
+                else if (!department.All(c => char.IsLetter(c)))
+                {
+                    Console.Write("Department must contain only letters. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                department = Console.ReadLine();
+            }
+
+            Console.Write("Enter New Salary: ");
+            string salary = Console.ReadLine();
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(salary))
+                {
+                    Console.Write("Salary cannot be empty. Try again: ");
+                }
+                else if (!decimal.TryParse(salary, out decimal salaryValue))
+                {
+                    Console.Write("Salary must be a valid number. Try again: ");
+                }
+                else if (salaryValue < 0)
+                {
+                    Console.Write("Salary cannot be negative. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                salary = Console.ReadLine();
+            }
+
+            admin.Role = role;
+            admin.Department = department;
+            admin.Salary = decimal.Parse(salary);
+            string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(admins, Newtonsoft.Json.Formatting.Indented);
+            System.IO.File.WriteAllText("admin.json", jsonString);
+            Console.WriteLine($"Admin {admin.FirstName} {admin.LastName} updated successfully!");
+
+            return "Update Admin is successfull!";
+        }
+
+
 
 
     }
