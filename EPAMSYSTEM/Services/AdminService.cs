@@ -1656,6 +1656,79 @@ namespace EPAMSYSTEM.Services
         }
 
 
+        /*------------------Attendance--------------------------*/
+
+        public string AttendanceOfAdmin()
+        {
+            Console.Clear();
+            Console.WriteLine("\n-----------------Attendance------------------\n");
+
+            Console.Write("Enter Admin Id: ");
+            string idInput = Console.ReadLine();
+
+            Guid id;
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(idInput))
+                {
+                    Console.Write("Id cannot be empty. Try again: ");
+                }
+                else if (!Guid.TryParse(idInput, out id))
+                {
+                    Console.Write("Id must be a valid GUID. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                idInput = Console.ReadLine();
+            }
+
+            Console.Write("Attendance in this month: ");
+            string attendance = Console.ReadLine();
+
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(attendance))
+                {
+                    Console.Write("Attendance cannot be empty. Try again: ");
+                }
+                else if (!int.TryParse(attendance, out int attendanceValue))
+                {
+                    Console.Write("Attendance must be a valid number. Try again: ");
+                }
+                else if (attendanceValue < 0)
+                {
+                    Console.Write("Attendance cannot be negative. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                attendance = Console.ReadLine();
+            }
+
+            List<Admin> admins = new List<Admin>();
+            if (System.IO.File.Exists(FilePath))
+            {
+                string json = System.IO.File.ReadAllText(FilePath);
+                admins = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Admin>>(json) ?? new List<Admin>();
+            }
+
+            Admin admin = admins.FirstOrDefault(e => e.Id == id);
+            if (admin == null)
+            {
+                return "Admin not found";
+            }
+
+            admin.Attendance = int.Parse(attendance);
+            string jsonOutput = Newtonsoft.Json.JsonConvert.SerializeObject(admins, Newtonsoft.Json.Formatting.Indented);
+            System.IO.File.WriteAllText(FilePath, jsonOutput);
+
+
+            return "Attendance is successfully!";
+        }
+
 
     }
 }
