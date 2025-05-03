@@ -641,6 +641,63 @@ namespace EPAMSYSTEM.Services
         }
 
 
+        /*-------------------------Get Admin By Id-------------------------*/
+
+        public Admin GetAdminById()
+        {
+            Console.Clear();
+            Console.WriteLine("------------------Get Admin By Id---------------------\n");
+
+            Console.Write("Enter Admin Id: ");
+            string idInput = Console.ReadLine();
+            Guid id;
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(idInput))
+                {
+                    Console.Write("Id cannot be empty. Try again: ");
+                }
+                else if (!Guid.TryParse(idInput, out id))
+                {
+                    Console.Write("Id must be a valid GUID. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                idInput = Console.ReadLine();
+            }
+
+            List<Admin> admins = new List<Admin>();
+            if (System.IO.File.Exists("admin.json"))
+            {
+                string json = System.IO.File.ReadAllText("admin.json");
+                admins = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Admin>>(json) ?? new List<Admin>();
+            }
+
+            Admin admin = admins.FirstOrDefault(a => a.Id == id);
+            if (admin != null)
+            {
+                Console.WriteLine
+                (
+                    $"Id: {admin.Id}, " +
+                    $"First Name: {admin.FirstName} " +
+                    $"Last Name: {admin.LastName}, " +
+                    $"Role: {admin.Role}, " +
+                    $"Email: {admin.Email}" +
+                    $"Department: {admin.Department}, " +
+                    $"Salary: {admin.Salary}, " +
+                    $"Date of Joining: {admin.DateOfJoiningToCompany}"
+                );
+            }
+            else
+            {
+                Console.WriteLine("Admin not found.");
+            }
+
+            return admin;
+        }
+
 
     }
 }
