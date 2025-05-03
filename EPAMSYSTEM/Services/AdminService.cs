@@ -442,6 +442,97 @@ namespace EPAMSYSTEM.Services
         }
 
 
+        public string ManagementOfAdmin()
+        {
+            Console.Clear();
+            Console.WriteLine("\n-----------------Management of Admin------------------\n");
+
+            while (true)
+            {
+                Console.WriteLine("\nPlease select an option:");
+                Console.WriteLine("1. Add Employee");
+                Console.WriteLine("2. Remove Employee");
+                Console.WriteLine("3. Update Employee");
+                Console.WriteLine("4. Get All Employees");
+                Console.WriteLine("5. Get Employee By ID");
+                Console.WriteLine("6. Get All Admins");
+                Console.WriteLine("7. Get Admin By ID");
+                Console.WriteLine("8. Update Profile");
+                Console.WriteLine("9. Start Work");
+                Console.WriteLine("10. End Work");
+                Console.WriteLine("11. Monthly Task Is Finished");
+                Console.WriteLine("12. Attendance");
+                Console.WriteLine("13. Exit\n");
+
+                Console.Write("Enter your choice: ");
+                string choice = Console.ReadLine();
+
+                if (choice == "1")
+                {
+                    Employee employee = new Employee();
+                    AddEmployee(employee);
+                }
+                else if (choice == "2")
+                {
+                    RemoveEmployee();
+                }
+                else if (choice == "3")
+                {
+                    UpdateProfileOfEmployee();
+                }
+                else if (choice == "4")
+                {
+                    GetAllEmployees();
+                }
+                else if (choice == "5")
+                {
+                    GetEmployeeById();
+                }
+                else if (choice == "6")
+                {
+                    GetAllAdmins();
+                }
+                else if (choice == "7")
+                {
+                    GetAdminById();
+                }
+                else if (choice == "8")
+                {
+                    UpdateProfileOfAdmin();
+                }
+                else if (choice == "9")
+                {
+                    StartWork();
+                }
+                else if (choice == "10")
+                {
+                    EndWork();
+                }
+                else if (choice == "11")
+                {
+                    MonthlyTaskIsFinishedOfAdmin();
+                }
+                else if (choice == "12")
+                {
+                    AttendanceOfAdmin();
+                }
+                else if (choice == "13")
+                {
+                    Console.WriteLine("Exiting.....");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid choice. Please try again.");
+                }
+
+                Console.WriteLine("\nPress any key to continue...");
+                Console.ReadKey();
+                Console.Clear();
+            }
+
+            return "Management of Admin is succesfully!";
+        }
 
 
 
