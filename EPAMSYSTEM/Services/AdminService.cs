@@ -987,6 +987,65 @@ namespace EPAMSYSTEM.Services
         }
 
 
+        /*----------------Get Admin By Id----------------*/
+
+        public Admin GetAdminById()
+        {
+            Console.Clear();
+            Console.WriteLine("\n-----------------Get Admin By Id------------------\n");
+
+            Console.Write("Enter Employee Id: ");
+            string idInput = Console.ReadLine();
+
+            Guid id;
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(idInput))
+                {
+                    Console.Write("Id cannot be empty. Try again: ");
+                }
+                else if (!Guid.TryParse(idInput, out id))
+                {
+                    Console.Write("Id must be a valid GUID. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                idInput = Console.ReadLine();
+            }
+
+            List<Admin> admins = new List<Admin>();
+
+            if (System.IO.File.Exists(FilePath))
+            {
+                string json = System.IO.File.ReadAllText(FilePath);
+                admins = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Admin>>(json) ?? new List<Admin>();
+            }
+
+            Admin admin = admins.FirstOrDefault(e => e.Id == id);
+
+            if (admin == null)
+            {
+                Console.WriteLine("Admin not found.");
+                return null;
+            }
+            else
+            {
+                Console.WriteLine($"Admin ID: {admin.Id}");
+                Console.WriteLine($"First Name: {admin.FirstName}");
+                Console.WriteLine($"Last Name: {admin.LastName}");
+                Console.WriteLine($"Role: {admin.Role}");
+                Console.WriteLine($"Email: {admin.Email}");
+                Console.WriteLine($"Department: {admin.Department}");
+                Console.WriteLine($"Salary: {admin.Salary}");
+                Console.WriteLine($"Date of Joining: {admin.DateOfJoiningToCompany.ToShortDateString()}");
+                Console.WriteLine($"Attendance: {admin.Attendance}");
+            }
+
+            return admin;
+        }
+
 
 
     }
