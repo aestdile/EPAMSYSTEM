@@ -1,12 +1,27 @@
-﻿using System;
+﻿
+
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using EPAMSYSTEM.Models;
 
 namespace EPAMSYSTEM.Services.IServices
 {
-    class IAdminService
+    public interface IAdminService
     {
+        public string Registration(Admin admin); // done
+        public string Login(); // done
+        public string ManagementOfAdmin(); // done
+        public string UpdateProfileOfAdmin(); // done
+        public string AddEmployee(Employee employee); // done
+        public string RemoveEmployee(); // done
+        public string UpdateProfileOfEmployee(); // done
+        public void GetAllEmployees(); // done
+        public Employee GetEmployeeById(); // done
+        public List<Admin> GetAllAdmins(); // done
+        public Admin GetAdminById(); // done
+        public string StartWork(); // done
+        public string EndWork(); // done    
+        public string MonthlyTaskIsFinishedOfAdmin();  // done
+        public string AttendanceOfAdmin(); // done
     }
 }
