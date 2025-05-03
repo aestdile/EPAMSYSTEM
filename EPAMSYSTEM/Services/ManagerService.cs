@@ -544,5 +544,69 @@ namespace EPAMSYSTEM.Services
         }
 
 
+        /*-------------------------Management----------------------------*/
+
+        public string Management()
+        {
+            Console.Clear();
+            Console.WriteLine("------------------Management---------------------\n");
+
+
+            while (true)
+            {
+                Console.WriteLine("Please select an option: ");
+                Console.WriteLine("1. Get All Admins");
+                Console.WriteLine("2. Get Admin By Id");
+                Console.WriteLine("3. Remove Admin");
+                Console.WriteLine("4. Update Admin");
+                Console.WriteLine("5. KPI For Employees");
+                Console.WriteLine("6. KPI For Admins");
+                Console.WriteLine("7. Exit\n");
+                Console.Write("Your choice: ");
+                string choice = Console.ReadLine();
+
+                if (choice == "1")
+                {
+                    GetAllAdmins();
+                }
+                else if (choice == "2")
+                {
+                    GetAdminById();
+                }
+                else if (choice == "3")
+                {
+                    RemoveAdmin();
+                }
+                else if (choice == "4")
+                {
+                    UpdateAdmin();
+                }
+                else if (choice == "5")
+                {
+                    KPIForEmployees();
+                }
+                else if (choice == "6")
+                {
+                    KPIForAdmins();
+                }
+                else if (choice == "7")
+                {
+                    Console.WriteLine("Exiting...");
+                    break;
+                }
+                else
+                {
+                    Console.WriteLine("Invalid choice. Please try again.");
+                }
+
+                Console.WriteLine("\nPress any key to continue...");
+                Console.ReadKey();
+                Console.Clear();
+            }
+
+            return "Management is successfull!";
+        }
+
+
     }
 }
