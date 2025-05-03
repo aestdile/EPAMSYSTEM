@@ -1047,6 +1047,66 @@ namespace EPAMSYSTEM.Services
         }
 
 
+        /*----------------Get Employee By Id----------------*/
+
+        public Employee GetEmployeeById()
+        {
+            Console.Clear();
+            Console.WriteLine("\n-----------------Get Employee By Id------------------\n");
+
+            Console.Write("Enter Employee Id: ");
+            string idInput = Console.ReadLine();
+
+            Guid id;
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(idInput))
+                {
+                    Console.Write("Id cannot be empty. Try again: ");
+                }
+                else if (!Guid.TryParse(idInput, out id))
+                {
+                    Console.Write("Id must be a valid GUID. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                idInput = Console.ReadLine();
+            }
+
+            Employee employee = new Employee();
+            List<Employee> employees = new List<Employee>();
+            if (System.IO.File.Exists(FilePath))
+            {
+                string json = System.IO.File.ReadAllText(FilePath);
+                employees = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Employee>>(json) ?? new List<Employee>();
+            }
+
+            employee = employees.FirstOrDefault(e => e.Id == id);
+
+            if (employee == null)
+            {
+                Console.WriteLine("Employee not found");
+            }
+            else
+            {
+                Console.WriteLine($"Id: {employee.Id}");
+                Console.WriteLine($"First Name: {employee.FirstName}");
+                Console.WriteLine($"Last Name: {employee.LastName}");
+                Console.WriteLine($"Email: {employee.Email}");
+                Console.WriteLine($"Position: {employee.Position}");
+                Console.WriteLine($"Department: {employee.Department}");
+                Console.WriteLine($"Date of Birth: {employee.DateOfBirth.ToShortDateString()}");
+                Console.WriteLine($"Date of Joining: {employee.DateOfJoiningToCompany.ToShortDateString()}");
+                Console.WriteLine($"Salary: {employee.Salary}");
+            }
+
+            return employee;
+        }
+
+
+
 
     }
 }
