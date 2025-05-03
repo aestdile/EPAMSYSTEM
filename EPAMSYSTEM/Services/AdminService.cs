@@ -1181,6 +1181,137 @@ namespace EPAMSYSTEM.Services
         }
 
 
+        /*----------------Update Profile of Employee----------------*/
+
+        public string UpdateProfileOfEmployee()
+        {
+            Console.Clear();
+            Console.WriteLine("\n-----------------Update Profile of Employee------------------\n");
+
+            Console.Write("Enter Employee Id: ");
+            string idInput = Console.ReadLine();
+
+            Guid id;
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(idInput))
+                {
+                    Console.Write("Id can not be empty. Try again: ");
+                }
+                else if (!Guid.TryParse(idInput, out id))
+                {
+                    Console.Write("Id must be a valid GUID. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                idInput = Console.ReadLine();
+            }
+
+            List<Employee> employees = new List<Employee>();
+
+            if (System.IO.File.Exists(FilePath))
+            {
+                string json = System.IO.File.ReadAllText(FilePath);
+                employees = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Employee>>(json) ?? new List<Employee>();
+            }
+
+            Employee employee = employees.FirstOrDefault(e => e.Id == id);
+            if (employee == null)
+            {
+                return "Employee not found";
+            }
+
+            Console.Write("Employee New Position: ");
+            string newPosition = Console.ReadLine();
+
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(newPosition))
+                {
+                    Console.Write("Position cannot be empty. Try again: ");
+                }
+                else if (newPosition.Length < 3 || newPosition.Length > 20)
+                {
+                    Console.Write("Position must be between 3 and 20 characters. Try again: ");
+                }
+                else if (!char.IsUpper(newPosition[0]))
+                {
+                    Console.Write("Position must start with an uppercase letter. Try again: ");
+                }
+                else if (!newPosition.All(c => char.IsLetter(c) || char.IsWhiteSpace(c)))
+                {
+                    Console.Write("Position must only contain letters. Try again: ");
+                }
+                else
+                {
+                    employee.Position = newPosition;
+                    break;
+                }
+                newPosition = Console.ReadLine();
+            }
+
+            Console.Write("Employee New Department: ");
+            string newDepartment = Console.ReadLine();
+
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(newDepartment))
+                {
+                    Console.Write("Department cannot be empty. Try again: ");
+                }
+                else if (newDepartment.Length < 3 || newDepartment.Length > 20)
+                {
+                    Console.Write("Department must be between 3 and 20 characters. Try again: ");
+                }
+                else if (!char.IsUpper(newDepartment[0]))
+                {
+                    Console.Write("Department must start with an uppercase letter. Try again: ");
+                }
+                else if (!newDepartment.All(c => char.IsLetter(c) || c == ' '))
+                {
+                    Console.Write("Department must only contain letters. Try again: ");
+                }
+                else
+                {
+                    employee.Department = newDepartment;
+                    break;
+                }
+                newDepartment = Console.ReadLine();
+            }
+
+            Console.Write("Employee New Salary: ");
+            string newSalaryInput = Console.ReadLine();
+
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(newSalaryInput))
+                {
+                    Console.Write("Salary cannot be empty. Try again: ");
+                }
+                else if (!decimal.TryParse(newSalaryInput, out decimal newSalary))
+                {
+                    Console.Write("Salary must be a valid number. Try again: ");
+                }
+                else if (newSalary < 0)
+                {
+                    Console.Write("Salary cannot be negative. Try again: ");
+                }
+                else
+                {
+                    employee.Salary = newSalary;
+                    break;
+                }
+                newSalaryInput = Console.ReadLine();
+            }
+
+            string jsonOutput = Newtonsoft.Json.JsonConvert.SerializeObject(employees, Newtonsoft.Json.Formatting.Indented);
+            System.IO.File.WriteAllText(FilePath, jsonOutput);
+
+            return $"Employee {employee.FirstName} {employee.LastName} updated successfully!";
+        }
+
 
 
     }
