@@ -1025,6 +1025,101 @@ namespace EPAMSYSTEM.Services
         }
 
 
+        /*-------------------------KPI For Admins----------------------------*/
 
+        public string KPIForAdmins()
+        {
+            Console.Clear();
+            Console.WriteLine("------------------KPI SYSTEM For Admins---------------------\n");
+
+            Console.Write("Admin Id: ");
+            string adminIdInput = Console.ReadLine();
+            Guid adminId;
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(adminIdInput))
+                {
+                    Console.Write("Id cannot be empty. Try again: ");
+                }
+                else if (!Guid.TryParse(adminIdInput, out adminId))
+                {
+                    Console.Write("Id must be a valid GUID. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                adminIdInput = Console.ReadLine();
+            }
+
+            Console.Write("Admin Department: ");
+            string adminDepartment = Console.ReadLine();
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(adminDepartment))
+                {
+                    Console.Write("Department cannot be empty. Try again: ");
+                }
+                else if (adminDepartment.Length < 3)
+                {
+                    Console.Write("Department must be at least 3 characters long. Try again: ");
+                }
+                else if (adminDepartment.Length > 40)
+                {
+                    Console.Write("Department must be less than 40 characters long. Try again: ");
+                }
+                else if (!char.IsUpper(adminDepartment[0]))
+                {
+                    Console.Write("Department must start with an uppercase letter. Try again: ");
+                }
+                else if (!adminDepartment.All(c => char.IsLetter(c)))
+                {
+                    Console.Write("Department must contain only letters. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                adminDepartment = Console.ReadLine();
+            }
+
+            List<Admin> admins = new List<Admin>();
+            if (System.IO.File.Exists("admin.json"))
+            {
+                string json = System.IO.File.ReadAllText("admin.json");
+                admins = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Admin>>(json) ?? new List<Admin>();
+            }
+            Admin admin = admins.FirstOrDefault(a => a.Id == adminId && a.Department == adminDepartment);
+            if (admin == null)
+            {
+                return "Admin not found!";
+            }
+            else if (admin.Attendance >= 24 && admin.MonthlyTask == true)
+            {
+                admin.NotificationsOfAdmin = $"Dear" +
+                                                $"{admin.Id}" +
+                                                $"{admin.FirstName}" +
+                                                $"{admin.LastName} 's works are super and increase your salary and update position in the next month";
+            }
+            else if (admin.Attendance >= 22 && admin.Attendance < 24 && admin.MonthlyTask == true)
+            {
+                admin.NotificationsOfAdmin = $"Dear " +
+                                                $"{admin.Id}" +
+                                                $"{admin.FirstName}" +
+                                                $"{admin.LastName}! Your works are good." +
+                                                $"We ask you to participate in more work and work on yourself" +
+                                                $"This way we can upgrade your position and salary";
+            }
+            else if (admin.Attendance < 22 && admin.MonthlyTask == false)
+            {
+                admin.NotificationsOfAdmin = $"Dear " +
+                                                $"{admin.Id}" +
+                                                $"{admin.FirstName}" +
+                                                $"{admin.LastName}! Your works are not good." +
+                                                $"We ask you to participate in more work and work on yourself";
+            }
+
+            return "KPI For Admins is successfull!";
+        }
     }
 }
