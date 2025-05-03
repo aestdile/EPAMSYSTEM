@@ -660,6 +660,73 @@ namespace EPAMSYSTEM.Services
         }
 
 
+        /*----------------Start Work----------------*/
+
+        public string StartWork()
+        {
+            Console.Clear();
+            Console.WriteLine("------------Start Work Employee---------------\n");
+            Console.Write("Your Id: ");
+            string idInput = Console.ReadLine();
+            Guid id;
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(idInput))
+                {
+                    Console.Write("Id cannot be empty. Try again: ");
+                }
+                else if (!Guid.TryParse(idInput, out id))
+                {
+                    Console.Write("Id must be a valid GUID. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                idInput = Console.ReadLine();
+            }
+
+            Console.WriteLine("Example (09:00:00): ");
+            Console.Write("Start Work Time (hh:mm:ss): ");
+            string startWorkInput = Console.ReadLine();
+            TimeSpan startWork;
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(startWorkInput))
+                {
+                    Console.Write("Start Work Time cannot be empty. Try again: ");
+                }
+                else if (!TimeSpan.TryParse(startWorkInput, out startWork))
+                {
+                    Console.Write("Start Work Time must be in hh:mm:ss format. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                startWorkInput = Console.ReadLine();
+            }
+
+            List<Employee> employees = new List<Employee>();
+            if (System.IO.File.Exists(FilePath))
+            {
+                string json = System.IO.File.ReadAllText(FilePath);
+                employees = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Employee>>(json) ?? new List<Employee>();
+            }
+
+            Employee employee = employees.FirstOrDefault(e => e.Id == id);
+            if (employee == null)
+            {
+                return "Employee not found";
+            }
+            employee.StartWork = startWork;
+            string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(employees, Newtonsoft.Json.Formatting.Indented);
+            System.IO.File.WriteAllText(FilePath, jsonString);
+
+
+            return "Start Work updated successfully";
+        }
+
 
 
     }
