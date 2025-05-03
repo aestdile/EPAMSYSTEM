@@ -1584,5 +1584,78 @@ namespace EPAMSYSTEM.Services
         }
 
 
+        /*------------------End Work--------------------------*/
+
+        public string EndWork()
+        {
+            Console.Clear();
+            Console.WriteLine("\n-----------------End Work------------------\n");
+
+            Console.Write("Enter Admin Id: ");
+            string idInput = Console.ReadLine();
+
+            Guid id;
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(idInput))
+                {
+                    Console.Write("Id cannot be empty. Try again: ");
+                }
+                else if (!Guid.TryParse(idInput, out id))
+                {
+                    Console.Write("Id must be a valid GUID. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                idInput = Console.ReadLine();
+            }
+
+            Console.WriteLine("Example (17:00:00): ");
+            Console.Write("End Work Time (hh:mm:ss): ");
+            string endWorkInput = Console.ReadLine();
+
+            TimeSpan endWork;
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(endWorkInput))
+                {
+                    Console.Write("End Work Time cannot be empty. Try again: ");
+                }
+                else if (!TimeSpan.TryParse(endWorkInput, out endWork))
+                {
+                    Console.Write("End Work Time must be in hh:mm:ss format. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                endWorkInput = Console.ReadLine();
+            }
+
+
+            List<Admin> admins = new List<Admin>();
+            if (System.IO.File.Exists(FilePath))
+            {
+                string json = System.IO.File.ReadAllText(FilePath);
+                admins = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Admin>>(json) ?? new List<Admin>();
+            }
+
+            Admin admin = admins.FirstOrDefault(e => e.Id == id);
+            if (admin == null)
+            {
+                return "Admin not found";
+            }
+
+            admin.EndWorkTime = endWork;
+            string jsonOutput = Newtonsoft.Json.JsonConvert.SerializeObject(admins, Newtonsoft.Json.Formatting.Indented);
+            System.IO.File.WriteAllText(FilePath, jsonOutput);
+
+            return "End Work is successfully!";
+        }
+
+
+
     }
 }
