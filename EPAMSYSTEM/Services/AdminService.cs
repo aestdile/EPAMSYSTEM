@@ -1730,5 +1730,76 @@ namespace EPAMSYSTEM.Services
         }
 
 
+        /*-------------------------Monthly Task----------------------------*/
+
+        public string MonthlyTaskIsFinishedOfAdmin()
+        {
+            Console.Clear();
+            Console.WriteLine("\n-----------------Monthly Task------------------\n");
+
+            Console.Write("Enter Admin Id: ");
+            string idInput = Console.ReadLine();
+
+            Guid id;
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(idInput))
+                {
+                    Console.Write("Id cannot be empty. Try again: ");
+                }
+                else if (!Guid.TryParse(idInput, out id))
+                {
+                    Console.Write("Id must be a valid GUID. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                idInput = Console.ReadLine();
+            }
+
+            Console.Write("Monthly Task is Finished (true/false): ");
+            string taskInput = Console.ReadLine();
+
+            bool taskFinished;
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(taskInput))
+                {
+                    Console.Write("Monthly Task is Finished cannot be empty. Try again: ");
+                }
+                else if (!bool.TryParse(taskInput, out taskFinished))
+                {
+                    Console.Write("Monthly Task is Finished must be true or false. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                taskInput = Console.ReadLine();
+            }
+
+
+            List<Admin> admins = new List<Admin>();
+
+            if (System.IO.File.Exists(FilePath))
+            {
+                string json = System.IO.File.ReadAllText(FilePath);
+                admins = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Admin>>(json) ?? new List<Admin>();
+            }
+
+            Admin admin = admins.FirstOrDefault(e => e.Id == id);
+
+            if (admin == null)
+            {
+                return "Admin not found";
+            }
+
+            admin.MonthlyTask = taskFinished;
+            string jsonOutput = Newtonsoft.Json.JsonConvert.SerializeObject(admins, Newtonsoft.Json.Formatting.Indented);
+            System.IO.File.WriteAllText(FilePath, jsonOutput);
+
+            return "Monthly Task is successfully!";
+        }
     }
 }
