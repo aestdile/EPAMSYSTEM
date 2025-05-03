@@ -1496,6 +1496,21 @@ namespace EPAMSYSTEM.Services
         }
 
 
+        /*----------------Get All Admins----------------*/
+
+        public List<Admin> GetAllAdmins()
+        {
+            List<Admin> admins = new List<Admin>();
+            if (System.IO.File.Exists(FilePath))
+            {
+                string json = System.IO.File.ReadAllText(FilePath);
+                admins = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Admin>>(json) ?? new List<Admin>();
+            }
+
+
+            return admins;
+        }
+
 
 
     }
