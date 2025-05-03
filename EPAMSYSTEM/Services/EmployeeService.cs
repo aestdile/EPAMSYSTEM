@@ -796,5 +796,72 @@ namespace EPAMSYSTEM.Services
         }
 
 
+        /*----------------Monthly Task is Finished----------------*/
+
+        public string MonthlyTaskIsFinishedOfEmployee()
+        {
+            Console.Clear();
+            Console.WriteLine("------------Monthly Task is Finished Employee---------------\n");
+            Console.Write("Your Id: ");
+            string idInput = Console.ReadLine();
+            Guid id;
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(idInput))
+                {
+                    Console.Write("Id cannot be empty. Try again: ");
+                }
+                else if (!Guid.TryParse(idInput, out id))
+                {
+                    Console.Write("Id must be a valid GUID. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                idInput = Console.ReadLine();
+            }
+
+            Console.Write("Monthly Task is Finished (true/false): ");
+            string taskInput = Console.ReadLine();
+            bool taskFinished;
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(taskInput))
+                {
+                    Console.Write("Monthly Task is Finished cannot be empty. Try again: ");
+                }
+                else if (!bool.TryParse(taskInput, out taskFinished))
+                {
+                    Console.Write("Monthly Task is Finished must be true or false. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                taskInput = Console.ReadLine();
+            }
+
+            List<Employee> employees = new List<Employee>();
+            if (System.IO.File.Exists(FilePath))
+            {
+                string json = System.IO.File.ReadAllText(FilePath);
+                employees = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Employee>>(json) ?? new List<Employee>();
+            }
+            Employee employee = employees.FirstOrDefault(e => e.Id == id);
+            if (employee == null)
+            {
+                return "Employee not found";
+            }
+            employee.MonthlyTaskIsFinished = taskFinished;
+            string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(employees, Newtonsoft.Json.Formatting.Indented);
+            System.IO.File.WriteAllText(FilePath, jsonString);
+
+
+            return "Monthly Task is Finished updated successfully";
+        }
+
+
+
     }
 }
