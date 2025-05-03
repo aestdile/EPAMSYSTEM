@@ -541,5 +541,52 @@ namespace EPAMSYSTEM.Services
             return "Login is successfull!";
         }
 
+
+        /*----------------Day Highlight----------------*/
+
+        public string DayHightLight()
+        {
+            Console.Clear();
+            Console.WriteLine("------------Day Highlight---------------\n");
+
+            while (true)
+            {
+                Console.WriteLine("Please, select an option:");
+                Console.WriteLine("1. Attendance");
+                Console.WriteLine("2. Start Work");
+                Console.WriteLine("3. End Work");
+                Console.WriteLine("4. Monthly Task is Finished");
+                Console.WriteLine("5. Update Profile");
+                Console.WriteLine("6. Exit\n");
+                Console.Write("Your choice: ");
+                string choice = Console.ReadLine();
+
+                switch (choice)
+                {
+                    case "1":
+                        AttendanceOfEmployee();
+                        break;
+                    case "2":
+                        StartWork();
+                        break;
+                    case "3":
+                        EndWork();
+                        break;
+                    case "4":
+                        MonthlyTaskIsFinishedOfEmployee();
+                        break;
+                    case "5":
+                        UpdateProfile();
+                        break;
+                    case "6":
+                        return "Exited from Day Highlight menu.";
+                    default:
+                        Console.WriteLine("Invalid choice. Please try again.\n");
+                        break;
+                }
+            }
+        }
+
+
     }
 }
