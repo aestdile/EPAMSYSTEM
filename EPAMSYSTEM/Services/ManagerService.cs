@@ -608,5 +608,39 @@ namespace EPAMSYSTEM.Services
         }
 
 
+
+
+        /*-------------------Get All Admins--------------------------*/
+
+
+        public void GetAllAdmins()
+        {
+            Console.Clear();
+            Console.WriteLine("------------------Get All Admins---------------------\n");
+
+            List<Admin> admins = new List<Admin>();
+            if (System.IO.File.Exists("admin.json"))
+            {
+                string json = System.IO.File.ReadAllText("admin.json");
+                admins = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Admin>>(json) ?? new List<Admin>();
+            }
+            if (admins.Count == 0)
+            {
+                Console.WriteLine("No admins found.");
+            }
+            else
+            {
+                foreach (var admin in admins)
+                {
+                    Console.WriteLine($"Id: {admin.Id}, Name: {admin.FirstName} {admin.LastName}, Email: {admin.Email}");
+                }
+            }
+
+            Console.WriteLine("\nPress Enter to return to the menu...");
+            Console.ReadLine();
+        }
+
+
+
     }
 }
