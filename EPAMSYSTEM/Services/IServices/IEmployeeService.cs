@@ -1,12 +1,16 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using EPAMSYSTEM.Models;
 
 namespace EPAMSYSTEM.Services.IServices
 {
-    class IEmployeeService
+    public interface IEmployeeService
     {
+        public string Registration(Employee employee); // done
+        public string Login(); // done
+        public string DayHightLight(); // done 
+        public string AttendanceOfEmployee(); // done
+        public string StartWork(); // done
+        public string EndWork(); // done
+        public string MonthlyTaskIsFinishedOfEmployee(); // done
+        public string UpdateProfile(); // done
     }
 }
