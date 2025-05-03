@@ -1130,6 +1130,58 @@ namespace EPAMSYSTEM.Services
         }
 
 
+        /*----------------Remove Employee----------------*/
+
+        public string RemoveEmployee()
+        {
+            Console.Clear();
+            Console.WriteLine("\n-----------------Remove Employee------------------\n");
+
+            Console.Write("Enter Employee Id: ");
+            string idInput = Console.ReadLine();
+
+            Guid id;
+            while (true)
+            {
+                if (string.IsNullOrWhiteSpace(idInput))
+                {
+                    Console.Write("Id can not be empty. Try again: ");
+                }
+                else if (!Guid.TryParse(idInput, out id))
+                {
+                    Console.Write("Id must be a valid GUID. Try again: ");
+                }
+                else
+                {
+                    break;
+                }
+                idInput = Console.ReadLine();
+            }
+
+            List<Employee> employees = new List<Employee>();
+            if (System.IO.File.Exists(FilePath))
+            {
+                string json = System.IO.File.ReadAllText(FilePath);
+                employees = Newtonsoft.Json.JsonConvert.DeserializeObject<List<Employee>>(json) ?? new List<Employee>();
+            }
+
+            Employee employee = employees.FirstOrDefault(e => e.Id == id);
+            if (employee == null)
+            {
+                Console.WriteLine("Employee not found");
+                return "Employee not found";
+            }
+
+            employees.Remove(employee);
+            string jsonString = Newtonsoft.Json.JsonConvert.SerializeObject(employees, Newtonsoft.Json.Formatting.Indented);
+            System.IO.File.WriteAllText(FilePath, jsonString);
+
+
+            return "Employee removed successfully!";
+        }
+
+
+
 
     }
 }
