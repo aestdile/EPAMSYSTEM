@@ -138,7 +138,7 @@ EPAMSYSTEM/
 
 - 🧠 C# (Console Application)
 - 📦 OOP: Abstraction, Encapsulation, Inheritance, Polymorphism
-- 📂 Ma'lumotlar List orqali saqlanadi *(Json yoki SQL versiyaga kengaytirilishi mumkin)*
+- 📂 Ma'lumotlar Json orqali saqlanadi 
 
 ---
 
@@ -163,7 +163,6 @@ Welcome to EPAMSYSTEM!
 
 ## 📚 Rekomendatsiya
 
-- `List<T>` bilan boshlang, so'ng `Json` yoki `SQL` bilan kengaytirish mumkin.
 - Loyihani modul tarzida rivojlantiring, interfeyslar orqali mustahkamlashni unutmang.
 - Har bir xizmat alohida xizmat klassida bo'lishi — Clean Architecture tamoyiliga mos.
 
