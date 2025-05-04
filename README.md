@@ -165,6 +165,7 @@ Welcome to EPAMSYSTEM!
 
 - Loyihani modul tarzida rivojlantiring, interfeyslar orqali mustahkamlashni unutmang.
 - Har bir xizmat alohida xizmat klassida bo'lishi — Clean Architecture tamoyiliga mos.
+- Shuningdek, loyiha public bo'lgani va undan foydalana olishingiz sababli, unda ba'zi kamchiliklar atayin qoldirilib ketilgan, 
 
 ---
 
