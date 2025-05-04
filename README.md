@@ -79,9 +79,7 @@ EPAMSYSTEM/
 ## 📦 Modellar: Propertylar
 
 ### Admin
-- Id (Guid)
-- FirstName
-- LastName
+- Id (Guid) - FirstName - LastName
 - Role
 - Email
 - Password
@@ -170,11 +168,9 @@ Welcome to EPAMSYSTEM!
 ---
 
 ## ✍️ Muallif
-
-**👤 Sizning ismingiz**\
-🔗 GitHub: [@sizning_github_profilingiz](https://github.com/sizning_github_profilingiz)\
-📌 *"Loyihani tugallangandan so'ng, uni GitHub'ga yuklang va repository havolasini yuboring!"*
-
+👤 Mukhtor Eshboyev\
+🔗 GitHub: [@aestdile](https://github.com/aestdile)\
+📌 "When you finish this project, upload it to GitHub and send me the repository link, I'll wait for it!"
 ---
 
 > Ushbu loyiha kompaniya boshqaruvi, xodimlar hisobi va ish jarayonlarini avtomatlashtirish uchun mo'ljallangan.
