@@ -1,12 +1,10 @@
-# 🏢 EPAMSYSTEM - OOP Based Company Management Console App (C#)
+🏢 EPAMSYSTEM - OOP Based Company Management Console App (C#)
+EPAMSYSTEM — bu C# tilida yozilgan Object-Oriented Programming (OOP) asosidagi to'liq kompaniya boshqaruv tizimi, unda Manager, Admin va Employee rollari o'zaro aloqada ishlaydi.
+Show Image
+Show Image
+Show Image
 
-**EPAMSYSTEM** — bu C# tilida yozilgan **Object-Oriented Programming (OOP)** asosidagi to'liq **kompaniya boshqaruv tizimi**, unda Manager, Admin va Employee rollari o'zaro aloqada ishlaydi.
-
----
-
-## 🧱 Arxitektura
-
-```
+🧱 Arxitektura
 EPAMSYSTEM/
 │
 ├── Models/
@@ -26,7 +24,8 @@ EPAMSYSTEM/
 │
 ├── Program.cs
 └── README.md
-```
+
+
 
 ---
 
