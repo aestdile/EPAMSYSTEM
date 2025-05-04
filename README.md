@@ -169,7 +169,7 @@ Welcome to EPAMSYSTEM!
 ---
 
 ## ✍️ Muallif
-👤 Mukhtor Eshboyev🪄
+👤 Mukhtor Eshboyev🪄\
 🔗 GitHub: [@aestdile](https://github.com/aestdile)\
 📌 "When you finish this project, upload it to GitHub and send me the repository link, I'll wait for it!"
 ---
