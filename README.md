@@ -79,7 +79,9 @@ EPAMSYSTEM/
 ## 📦 Modellar: Propertylar
 
 ### Admin
-- Id (Guid) - FirstName - LastName
+- Id (Guid)
+- FirstName 
+- LastName
 - Role
 - Email
 - Password
