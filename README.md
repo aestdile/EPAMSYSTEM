@@ -123,8 +123,10 @@ git clone https://github.com/your-username/EPAMSYSTEM.git
 
 3. **Program.cs faylidan loyihani ishga tushiring**
 
-🤝 Muallif
-👨‍💻 Loyihani ishlab chiqqan: [Ismingizni kiriting]
+## ✍️ Muallif
+👤 Mukhtor Eshboyev\
+🔗 GitHub: [@aestdile](https://github.com/aestdile)\
+📌 "When you finish this project, upload it to GitHub and send me the repository link, I'll wait for it!"
 
-📫 Bog‘lanish: [your-email@example.com] | Telegram: [@yourusername]
+📫 Bog‘lanish: [aestdile@gmail.com] | Telegram: [@aestdile]
 
